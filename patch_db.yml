@@ -1,0 +1,14 @@
+- name: "EMERGENCY MYSQL HARDENING"
+  hosts: database_servers
+  tasks:
+    - name: "DISABLE DANGEROUS FUNCTIONS"
+      community.mysql.mysql_query:
+        login_db: mysql
+        query: |
+          REVOKE ALL PRIVILEGES ON *.* FROM 'webapp'@'%';
+          GRANT SELECT, INSERT ON app_db.* TO 'webapp'@'%';
+          
+    - name: "ENABLE LOGGING"
+      ansible.builtin.lineinfile:
+        path: /etc/mysql/my.cnf
+        line: "general_log = 1"
