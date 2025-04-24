@@ -1,0 +1,14 @@
+{
+  "rules": [
+    {
+      "description": "Block common SQLi patterns",
+      "expression": "(http.request.uri.query contains \"SELECT\") or (http.request.uri.query contains \"UNION\") or (http.request.uri.query contains \"1=1\")",
+      "action": "block"
+    },
+    {
+      "description": "Detect obfuscated attacks",
+      "expression": "regex(http.request.uri.query, \"\\b(?:s\\s*e\\s*l\\s*e\\s*c\\s*t)\\b\")",
+      "action": "challenge"
+    }
+  ]
+}
